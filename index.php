@@ -15,7 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // проверка get запроса
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    // если запрос get, выходим
+    // если запрос get,
+    // выходим
     echo('OK');
     exit();
 }
@@ -26,6 +27,7 @@ $request = $_SERVER['REDIRECT_URL'];
 $postData = (array)json_decode(file_get_contents("php://input"));
 // подключение настроек
 require_once './settings.php';
+require_once './src/functions.php';
 
 // проверка отключения апликации
 if (!$isAppOn) {
@@ -43,26 +45,34 @@ $mysqli = new mysqli($servername, $username, $password, $dbName);
 switch ($request) {
 
     case '/login' :
-        require __DIR__ . '/src/login.php';
+        require __DIR__ . '/pages/login.php';
         break;
 
     case '/save_videos' :
-        require __DIR__ . '/src/save_videos.php';
+        require __DIR__ . '/pages/save_videos.php';
         break;
 
     case '/get/watched/videos' :
-        require __DIR__ . '/src/get_videos.php';
+        require __DIR__ . '/pages/get_videos.php';
         break;
 
     case '/get/check/lock' :
-        require __DIR__ . '/src/lock_check.php';
+        require __DIR__ . '/pages/lock_check.php';
         break;
 
     case '/log' :
-        require __DIR__ . '/src/log.php';
+        require __DIR__ . '/pages/log.php';
+        break;
+
+    case '/send/message' :
+        require __DIR__ . '/pages/send_messages.php';
+        break;
+
+    case '/send/registered/users' :
+        require __DIR__ . '/pages/send_registered_users.php';
         break;
 
     default:
-        require __DIR__ . '/src/error.php';
+        require __DIR__ . '/pages/error.php';
         break;
 }
